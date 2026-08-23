@@ -1,1 +1,1 @@
-API_KEY = "AKIAIOSFODNN7EXAMPLE"
+API_KEY = "ghp_abcdefghijklmnopqrstuvwxyz1234567890"
