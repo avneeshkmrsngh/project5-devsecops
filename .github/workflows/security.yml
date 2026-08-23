@@ -6,6 +6,9 @@ on:
 
 jobs:
 
+  # ============================================================
+  # GATE 1 - BANDIT SAST
+  # ============================================================
   bandit:
     name: Gate 1 - Bandit SAST
     runs-on: ubuntu-latest
@@ -26,6 +29,9 @@ jobs:
         run: bandit -r . -lll
 
 
+  # ============================================================
+  # GATE 2 - SAFETY DEPENDENCY SCAN
+  # ============================================================
   safety:
     name: Gate 2 - Safety Dependency Scan
     needs: bandit
@@ -48,6 +54,9 @@ jobs:
         run: safety check -r requirements.txt
 
 
+  # ============================================================
+  # GATE 3 - GITLEAKS SECRET DETECTION
+  # ============================================================
   gitleaks:
     name: Gate 3 - Gitleaks Secret Detection
     needs: safety
@@ -62,14 +71,19 @@ jobs:
 
       - name: Install Gitleaks
         run: |
-          curl -sSfL https://raw.githubusercontent.com/gitleaks/gitleaks/master/scripts/install.sh | sh -s -- -b /usr/local/bin
+          curl -sSfL https://raw.githubusercontent.com/gitleaks/gitleaks/master/scripts/install.sh -o install-gitleaks.sh
+          chmod +x install-gitleaks.sh
+          sudo ./install-gitleaks.sh -b /usr/local/bin
+          gitleaks version
 
       - name: Run Gitleaks
-        run: gitleaks detect --source . --config .gitleaks.toml --no-banner
-          
-        
+        run: |
+          gitleaks detect --source . --config .gitleaks.toml --no-banner
 
 
+  # ============================================================
+  # GATE 4 - CUSTOM PROMPT INJECTION SCANNER
+  # ============================================================
   prompt-injection:
     name: Gate 4 - Custom Prompt Injection Scanner
     needs: gitleaks
