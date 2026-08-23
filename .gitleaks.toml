@@ -1,0 +1,6 @@
+[[rules]]
+id = "project5-api-key"
+description = "Project 5 test API key"
+regex = '''API_KEY\s*=\s*"ghp_[A-Za-z0-9]{36}"'''
+secretGroup = 0
+keywords = ["API_KEY", "ghp_"]
