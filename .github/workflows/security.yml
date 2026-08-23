@@ -28,6 +28,8 @@ jobs:
 
   safety:
     name: Gate 2 - Safety Dependency Scan
+    needs: bandit
+    if: ${{ always() }}
     runs-on: ubuntu-latest
 
     steps:
@@ -48,6 +50,8 @@ jobs:
 
   gitleaks:
     name: Gate 3 - Gitleaks Secret Detection
+    needs: safety
+    if: ${{ always() }}
     runs-on: ubuntu-latest
 
     steps:
@@ -64,6 +68,8 @@ jobs:
 
   prompt-injection:
     name: Gate 4 - Custom Prompt Injection Scanner
+    needs: gitleaks
+    if: ${{ always() }}
     runs-on: ubuntu-latest
 
     steps:
