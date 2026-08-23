@@ -1,7 +1,7 @@
 import ast
 
 
-SYSTEM_PROMPT = "You are a helpful AI assistant. Follow the application's instructions and respond safely."
+APP_INSTRUCTIONS = "You are a helpful AI assistant."
 
 
 def calculate(user_input):
